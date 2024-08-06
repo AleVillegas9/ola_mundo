@@ -21,7 +21,7 @@ st.header("Aymr es un asistente jurídico, impulsado con inteligencia artificial
 st.header("Esta herramienta es sólo de apoyo para la labor de los abogados. DE NINGUNA MANERA SUSTITUYE LA LABOR DE INVESTIGACIÓN Y AUTONOMÍA DEL ABOGADO") #Pesar en más advertencias. 
 
 #Paso 2: Selección sobre qué es tu caso. 
-categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acuerdo', 'Acuerdo general', 'Anteproyecto', 'Bases', 'Bases de carácter general', 'Bases generales', 'Criterios', 'Criterios normativos', 'Criterios técnicos', 'Directrices', 'Lineamientos', 'Manual', 'Medidas', 'Medidas administrativas', 'Plan', 'Poítica', 'Procedimiento', 'Programa', 'Proyecto', 'Reglamento']) #Estas son todas las categorias? Ya me confundí, porque no todas estas son normas, hay proyectos, etc. Además, cuál es la diferencia entre críterios a secas y los otros dos? ESTA RARA LA LISTA, no parecen categorias de normas. Por ejemplo si mi caso es de fraude, cómo lo pongo. A menos, que no sea un repositiorio de solo normas, sino de varios tipos de documentos. 
+categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acueros Organizacionales del CJF', 'Normatividad relevnte para Órganos Jurisdiccioanales', 'Nomatividad relevante para Áreas Administrativas']) #Estas son todas las categorias? Ya me confundí, porque no todas estas son normas, hay proyectos, etc. Además, cuál es la diferencia entre críterios a secas y los otros dos? ESTA RARA LA LISTA, no parecen categorias de normas. Por ejemplo si mi caso es de fraude, cómo lo pongo. A menos, que no sea un repositiorio de solo normas, sino de varios tipos de documentos. 
 
 
 #Nota 1: Se me ocurren algunas opciones para lograr este paso
