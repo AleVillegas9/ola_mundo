@@ -69,31 +69,69 @@ vector_store_clasificador = PineconeVectorStore(index = s2indexfuentes, embeddin
 
 retrieverprop = vector_store_clasificador.as_retriever(search_type = 'similarity_score_threshold', search_kwargs = {"score_threshold": 0.61}) 
 
+#-**-*-*-*-*-*-*-*-*-*-*-*-*
+
+#Paso 5:Respuesta bruta
+
+
+#Primero que elija la categoria que quiere
+categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acuerdos Organizacionales del CJF', 'Normatividad relevnte para Órganos Jurisdiccioanales', 'Nomatividad relevante para Áreas Administrativas']) 
 
 
 
+#Segundo, construimos una query con esa categoria
+query_class = f'¿Qué documentos tratan sobre la categoria {categoria_usur}'
+
+
+#Tercero hacemos la query
+respuestaprop = retrieverprop.invoke(query_class)
+
+
+#*-*-*-*-*-*--*-*-*
+
+#Paso 6:  Limpieza
+
+#Primero importamos el llm para chatear
+
+from langchain_openai import ChatOpenAI
+
+#cargamos el modelo
+llm = ChatOpenAI(
+    openai_api_key= openai_api, 
+    model_name='gpt-3.5-turbo',
+    temperature=0.0
+)
+
+#Definimos el system prompt
+fake_system_prompt = f"""
+Tengo el siguiene texto, el cual contiene una lista de uno o más  textos con nombre, links, y un resumen de los mismos. Por favor, hazme una nueva lista, numerada, en el que vengan esos tres datos por cada texto, pero donde se eliminen los textos repetidos. Deja de enumerar cuando ya no haya más textos nuevos. Entre cada enumaración de cada elemento deja doble espacio. De manera que pueda diferenciar entre cada elemento. El texto es {respuestaprop}
+""" 
+
+#Hacemos la limpieza de datos innecesarios
+
+respuesta_limpia = str(llm.invoke(fake_system_prompt))
+
+import re
+
+respuesta_limpia = re.search(r"content='(.*?)'", respuesta_limpia)
+if respuesta_limpia:
+    content_value = respuesta_limpia.group(1) #Aqui se guarda el string 
+    print(content_value)
+else:
+    print("No se encontró el contenido.")
+    
+content_value = content_value
+
+#*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+#Paso 7: Presentamos la respuesta
 
 
 
-#Paso 2: Selección sobre qué es tu caso. 
-categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acuerdos Organizacionales del CJF', 'Normatividad relevnte para Órganos Jurisdiccioanales', 'Nomatividad relevante para Áreas Administrativas']) #Estas son todas las categorias? Ya me confundí, porque no todas estas son normas, hay proyectos, etc. Además, cuál es la diferencia entre críterios a secas y los otros dos? ESTA RARA LA LISTA, no parecen categorias de normas. Por ejemplo si mi caso es de fraude, cómo lo pongo. A menos, que no sea un repositiorio de solo normas, sino de varios tipos de documentos. 
+st.write(f'haz seleccionado {categoria_usur} El nombre de las normas relevantes para tu caso son: {content_value}')
 
 
-#Nota 1: Se me ocurren algunas opciones para lograr este paso
-    #A) No sé que tan pertinente sea hacerlo multiselección. 
-    #B) En teoria se le podría pedir al abogado que ingrese un resumen de no sé 1000 palabras con los puntos más importantes de su caso. 
-    #C) Igual en teoría, se podría solicitar que ponga un pdf completo con el caso en cuestion, y la app te diría sobre qué categorias es más probable que se enmarque. 
-    #D) Se podrían implementar todas juntas. 
-#En lo personal me iría por la opción que puse en la APP, porque 1) Optimiza el proceso, 2) Le da un alto grado de autonomía al abogado. 
 
-
-st.write(f'haz seleccionado {categoria_usur} El nombre de las normas relevantes para tu caso son: PONER RESPUESTA DEL LLM')
-
-#Nota 2: ¿Cómo se va a saber cuántas normas se van a regresar?
-    #A) Poner un top K. Opcion relatiamente fácil porque el mismo codigo de los embedding te dice cuantos resultados quieres que te de. Además, como determinamos el K optimo?
-    #B) Todas las normas que rebase cierto rango de probabilidad. Un poco más complicado de programar. como determinar la probabilidad adecuada? Quiza una actualizacion es que el usuario pueda elejir el nivel de probabilidad. 
-
-#Yo me iría por la primera opción. Pondría un K razonablemente grande. Y se compensaria porque el usuario podría utilizar el chat para comprobar que tanto la norma se adapta a su caso. Además, sería más optimo, que agregar otra funciin que calcule probabilidad. 
 
 
 #Paso 3: Chatea con la norma. 
