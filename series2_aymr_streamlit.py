@@ -6,9 +6,11 @@ Created on Tue Aug  6 11:30:01 2024
 
 Descripción: Esta es la parte frontend del programa. 
 """
-#Paso 0: Cargar libreria
+#Paso 0: Cargar libreria basica
 import streamlit as st
 
+#*-*-*-**-*-*-*-**-*-*-*-
+                                #Datos generales
 
 #Paso 1: Datos generales
 
@@ -19,6 +21,37 @@ st.title('Asistente jurídico Aymr') #Cambiar el nombre cuando se decida uno
 st.header("Aymr es un asistente jurídico, impulsado con inteligencia artificial, que te ayudará en la busqueda de normas que sean relevantes para tu caso. Además de que te permitirá interactuar con dichas normas. Su funcionamiento es muy sencillo. Primero debes de seleccionar la categoria en la que se enmarca tu caso en cuestión. Aymr te dará una lista de las normas con una mayor posibilidad de relacionarse con tu caso. Segundo, elije una norma con la que quieras chatear, y hazle preguntas.")  #Mejorar descripción
 
 st.header("Esta herramienta es sólo de apoyo para la labor de los abogados. DE NINGUNA MANERA SUSTITUYE LA LABOR DE INVESTIGACIÓN Y AUTONOMÍA DEL ABOGADO") #Pesar en más advertencias. 
+
+#*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+                                #Clasificador
+#Paso 2: Cargamos el index de fuentes
+
+#Primero librerias
+from pinecone import Pinecone
+
+#Guardamos el secreto
+#Nota. Guardar el secreto en streamlit
+
+pinecone_api = st.secrets['pinecone_apikey']
+
+#hacemos la variable
+pc = Pinecone(
+      api_key=pinecone_api, environment="us-west1-gcp")
+
+# # Iniciamos el index
+s2indexfuentes = pc.Index('s2indexfuentes') 
+
+
+
+
+
+
+
+
+
+
+
 
 #Paso 2: Selección sobre qué es tu caso. 
 categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acuerdos Organizacionales del CJF', 'Normatividad relevnte para Órganos Jurisdiccioanales', 'Nomatividad relevante para Áreas Administrativas']) #Estas son todas las categorias? Ya me confundí, porque no todas estas son normas, hay proyectos, etc. Además, cuál es la diferencia entre críterios a secas y los otros dos? ESTA RARA LA LISTA, no parecen categorias de normas. Por ejemplo si mi caso es de fraude, cómo lo pongo. A menos, que no sea un repositiorio de solo normas, sino de varios tipos de documentos. 
