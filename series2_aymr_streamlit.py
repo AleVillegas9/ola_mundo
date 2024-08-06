@@ -56,13 +56,11 @@ openai_api = st.secrets['openai_api']
 
 
 #Primero, creamos el embedding model
-embeddings = OpenAIEmbeddings(model="text-embedding-ada-002", openai_api_key= openai_api) #Cuidado APIkey a la vista
+embeddings = OpenAIEmbeddings(model="text-embedding-ada-002", openai_api_key= openai_api)
 
 
 #Despues Hacemos el vectorstore
-vector_store_clasificador = PineconeVectorStore(index = s2indexfuentes, embedding= embeddings, text_key= 'fuente') #NOTA NIVEL 9: el text_key, es el campo de metadatos que quieres que consulte. ASEGURATE QUE TODO EL TEXTO ESTE EN ESTE CAMPO DE LOS METADATOS
-
-#nota2: fijate que en el parametro de index, viene el que creaste para clasificar.
+vector_store_clasificador = PineconeVectorStore(index = s2indexfuentes, embedding= embeddings, text_key= 'fuente') 
 
 
 
