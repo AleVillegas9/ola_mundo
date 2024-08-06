@@ -43,9 +43,9 @@ st.write(f'haz seleccionado {categoria_usur} El nombre de las normas relevantes 
 
 #Paso 3: Chatea con la norma. 
 
-norma_chat = st.selectbox("Elije la norma con la que quieras chatear: ",['2013-3-0-AC_V317', '2013-40-2-AC_V72', '2014-36-0-AC_V18', '2014-56-1-AC_V80', '2014-56-2-AC_V37', '2018-28-2-AC_V03', '2018-45-1-AC_V12', '2019-9-2-AC_V05', '2020-3-1-AC_V02', '2020-12-0-AC_V07', '2021-0-134-DD_V15', '2023-6-2-AC_V01'])
+norma_chat = st.multiselect("Elije la o las normas con la que deseas chatear chatear: ",['2013-3-0-AC_V317', '2013-40-2-AC_V72', '2014-36-0-AC_V18', '2014-56-1-AC_V80', '2014-56-2-AC_V37', '2018-28-2-AC_V03', '2018-45-1-AC_V12', '2019-9-2-AC_V05', '2020-3-1-AC_V02', '2020-12-0-AC_V07', '2021-0-134-DD_V15', '2023-6-2-AC_V01'])
                           
-#Nota 3: Quiza lo optimo seria que la lsita se actualizara y solo mostrara las normas que son relevantes, y son filtradas por el paso anterior. Sin embargo, quiza seria buena idea que se le de la posibilidad al usuario de charlar con la norma quequiera en el momento que quiera.
+
 
 query = "Tu pregunta a la norma"
 
