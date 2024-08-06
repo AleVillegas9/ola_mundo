@@ -53,9 +53,9 @@ st.text_area ('La respuesta a tu duda {query} es LO QUE DE EL CHAT')
 
 #Paso 4: Referencias
 
-st.markdown("[Enlace al consejo de la judicatura] (https://www.cjf.gob.mx/)") #Poner un enlace
-st.markdown("[Enlace a la normativa aplicable] (https://apps.cjf.gob.mx/normativa/Index)") #Aqui poner los links al repositorio de normas.
+st.markdown("Enlace al consejo de la judicatura: (https://www.cjf.gob.mx/)") #Poner un enlace
+st.markdown("Enlace a la normativa aplicable: (https://apps.cjf.gob.mx/normativa/Index)") #Aqui poner los links al repositorio de normas.
 
-st.markdown("[Enlace CIDE], (https://www.cide.edu/)")
+st.markdown("Enlace CIDE: (https://www.cide.edu/)")
 
 #Nota: ¿Qué otros links serían relevantes?
