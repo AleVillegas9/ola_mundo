@@ -21,7 +21,7 @@ st.header("Aymr es un asistente jurídico, impulsado con inteligencia artificial
 st.header("Esta herramienta es sólo de apoyo para la labor de los abogados. DE NINGUNA MANERA SUSTITUYE LA LABOR DE INVESTIGACIÓN Y AUTONOMÍA DEL ABOGADO") #Pesar en más advertencias. 
 
 #Paso 2: Selección sobre qué es tu caso. 
-categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acueros Organizacionales del CJF', 'Normatividad relevnte para Órganos Jurisdiccioanales', 'Nomatividad relevante para Áreas Administrativas']) #Estas son todas las categorias? Ya me confundí, porque no todas estas son normas, hay proyectos, etc. Además, cuál es la diferencia entre críterios a secas y los otros dos? ESTA RARA LA LISTA, no parecen categorias de normas. Por ejemplo si mi caso es de fraude, cómo lo pongo. A menos, que no sea un repositiorio de solo normas, sino de varios tipos de documentos. 
+categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acuerdos Organizacionales del CJF', 'Normatividad relevnte para Órganos Jurisdiccioanales', 'Nomatividad relevante para Áreas Administrativas']) #Estas son todas las categorias? Ya me confundí, porque no todas estas son normas, hay proyectos, etc. Además, cuál es la diferencia entre críterios a secas y los otros dos? ESTA RARA LA LISTA, no parecen categorias de normas. Por ejemplo si mi caso es de fraude, cómo lo pongo. A menos, que no sea un repositiorio de solo normas, sino de varios tipos de documentos. 
 
 
 #Nota 1: Se me ocurren algunas opciones para lograr este paso
@@ -43,7 +43,7 @@ st.write(f'haz seleccionado {categoria_usur} El nombre de las normas relevantes 
 
 #Paso 3: Chatea con la norma. 
 
-norma_chat = st.selectbox("Elije la norma con la que quieras chatear: ",['Norma 1', 'norma 2', 'norma 3', 'norma 4', 'norma 5', 'norma 6'])
+norma_chat = st.selectbox("Elije la norma con la que quieras chatear: ",['2013-3-0-AC_V317', '2013-40-2-AC_V72', '2014-36-0-AC_V18', '2014-56-1-AC_V80', '2014-56-2-AC_V37', '2018-28-2-AC_V03', '2018-45-1-AC_V12', '2019-9-2-AC_V05', '2020-3-1-AC_V02', '2020-12-0-AC_V07', '2021-0-134-DD_V15', '2023-6-2-AC_V01'])
                           
 #Nota 3: Quiza lo optimo seria que la lsita se actualizara y solo mostrara las normas que son relevantes, y son filtradas por el paso anterior. Sin embargo, quiza seria buena idea que se le de la posibilidad al usuario de charlar con la norma quequiera en el momento que quiera.
 
