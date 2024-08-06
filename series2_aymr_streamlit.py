@@ -63,9 +63,11 @@ embeddings = OpenAIEmbeddings(model="text-embedding-ada-002", openai_api_key= op
 vector_store_clasificador = PineconeVectorStore(index = s2indexfuentes, embedding= embeddings, text_key= 'fuente') 
 
 
+#*-*-*-*-*-*-*-*-
 
+#Paso 4: Convertimos el vectorstore en un retriever para que me de los resultados. 
 
-
+retrieverprop = vector_store_clasificador.as_retriever(search_type = 'similarity_score_threshold', search_kwargs = {"score_threshold": 0.61}) 
 
 
 
