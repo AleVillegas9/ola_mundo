@@ -128,19 +128,27 @@ content_value = content_value
 
 st.write(f'Haz seleccionado {categoria_usur}. El nombre de las normas relevantes para tu caso son: {content_value}')
 
+#El problema, es que no me lo presenta en forma de texto, y no me dal el texto completo, una opcion podria hacer dos st.wrtie. uno con la primera parte de la categoria usada y el segudo con la respuesta. 
 
+#*-*-**-*-*-*-*-*-*--*-*-
 
+                #Inicia la parte del chat con la norma. 
 
-
-#Paso 3: Chatea con la norma. 
+#Paso 8: Hacemos el cuadro de selecccion sobre que con cuales normas quiere chatear el usuario. 
 
 norma_chat = st.multiselect("Elije la o las normas con la que deseas chatear chatear: ",['2013-3-0-AC_V317', '2013-40-2-AC_V72', '2014-36-0-AC_V18', '2014-56-1-AC_V80', '2014-56-2-AC_V37', '2018-28-2-AC_V03', '2018-45-1-AC_V12', '2019-9-2-AC_V05', '2020-3-1-AC_V02', '2020-12-0-AC_V07', '2021-0-134-DD_V15', '2023-6-2-AC_V01'])
                           
 
 
-query = "Tu pregunta a la norma"
+query = st.text_input('Ingresa tu duda')
 
-st.text_area ('La respuesta a tu duda {query} es LO QUE DE EL CHAT')
+st.write ('Respuesta {query}')
+
+
+
+#-*-*-*-*-*-*-**-*-**-*-*--*-*-*-*
+
+                                    #Extras
 
 #Paso 4: Referencias
 
