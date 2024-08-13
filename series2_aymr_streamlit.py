@@ -126,7 +126,7 @@ content_value = content_value
 
 #Paso 7: Presentamos la respuesta
 
-st.text(f'Haz seleccionado {categoria_usur}. El nombre de las normas relevantes para tu caso son: {respuesta_limpia}')
+st.text(f'Haz seleccionado {categoria_usur}. El nombre de las normas relevantes para tu caso son: {content_value}')
 
 
 
