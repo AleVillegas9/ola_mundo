@@ -5,3 +5,9 @@ huggingface_hub
 pinecone
 langchain_pinecone
 langchain_openai
+langchain.chains
+langchain_core.prompts
+langchain.chains.combine_documents
+langchain_core.runnables.history 
+langchain_core.prompts 
+langchain_community.chat_message_histories

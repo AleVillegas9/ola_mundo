@@ -75,7 +75,7 @@ retrieverprop = vector_store_clasificador.as_retriever(search_type = 'similarity
 
 
 #Primero que elija la categoria que quiere
-categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acuerdos Organizacionales del Consejo de la Judicatura federal', 'Normatividad relevnte para Órganos Jurisdiccioanales', 'Nomatividad relevante para Áreas Administrativas']) 
+categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acuerdos Organizacionales del Consejo de la Judicatura Federal', 'Normatividad relevnte para Órganos Jurisdiccionales', 'Nomatividad relevante para Áreas Administrativas']) 
 
 
 
@@ -133,16 +133,104 @@ st.write(f'Haz seleccionado {categoria_usur}. El nombre de las normas relevantes
 #*-*-**-*-*-*-*-*-*--*-*-
 
                 #Inicia la parte del chat con la norma. 
+                
+#Paso 8: Vectostore chat
 
-#Paso 8: Hacemos el cuadro de selecccion sobre que con cuales normas quiere chatear el usuario. 
+
+indexs2 = pc.Index('indexs2')
+
+vector_store_chat = PineconeVectorStore(index = indexs2, embedding= embeddings, text_key= 'contenido')
+
+#*-*-*-*-*-*-*-*
+
+#Paso 9: Hacemos el cuadro de selecccion sobre que con cuales normas quiere chatear el usuario. 
 
 norma_chat = st.multiselect("Elije la o las normas con la que deseas chatear chatear: ",['2013-3-0-AC_V317', '2013-40-2-AC_V72', '2014-36-0-AC_V18', '2014-56-1-AC_V80', '2014-56-2-AC_V37', '2018-28-2-AC_V03', '2018-45-1-AC_V12', '2019-9-2-AC_V05', '2020-3-1-AC_V02', '2020-12-0-AC_V07', '2021-0-134-DD_V15', '2023-6-2-AC_V01'])
                           
+#-*-*-*-*-*-**-*-**-
+
+
+#Paso 10: Hacemos el rag chain
+
+#Primero cargamos las librerias para hacer el chat, y los system prompts
+from langchain.chains import create_retrieval_chain
+from langchain_core.prompts import ChatPromptTemplate
+from langchain.chains.combine_documents import create_stuff_documents_chain
+
+#Segundo definimos el systemprompt
+#Nota: Esto cambiará para cuando se de la opcion de elegir las normas con la que quieres chatear
+
+system_prompt1 = f"""
+Eres un consultor experto en leyes. Por lo cual, vas a contestar las preguntas que se te hagan, de una manera clara y precisa. Para tu respuesta sólo toma en cuenta las normas que tengan el siguiente nombre {norma_chat}
+"""
+
+#Tercero, hacemos el promt template con el system prompt ya definido anteriormente 
+prompt = ChatPromptTemplate.from_messages(
+    [("system", system_prompt1), #lo que va entre " " es como el rol que ese espera que siga la instruccion que va del otro lado e la coma. en este sentido, le digo que el sistema debe adoptar ese systempropmt
+     ("human", "{context}"),]) #aqui el papel de humano adoptara lo que sea que le pregunte
+
+#fuente: https://api.python.langchain.com/en/latest/prompts/langchain_core.prompts.chat.ChatPromptTemplate.html
+
+
+#Transformamos el vectorstore en retriever
+
+
+retriever = vector_store_chat.as_retriever()
+
+
+#Quinto, creamos el question answer chain y el rag chain
+
+question_answer_chain = create_stuff_documents_chain(llm, prompt) #aqui recupro el promp y el llm que usare
+
+rag_chain1 = create_retrieval_chain(retriever, question_answer_chain) #aqui recupero el rago con la variable retriever
+
+#*-*-*-*-*-*-*-*-*-*-*-*-*-
+#Paso 10: memory
+
+from langchain_core.runnables.history import RunnableWithMessageHistory
+
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+
+from langchain_community.chat_message_histories import SQLChatMessageHistory
+
+
+#Recuperamos el system propmt
+propmt_memory = ChatPromptTemplate.from_messages(
+    [("system", "Eres un consultor experto en leyes. Por lo cual, vas a contestar las preguntas que se te hagan, de una manera clara y precisa."),
+       MessagesPlaceholder(variable_name="history"),
+       ("human", "{input}")]) #Aqui rescatamos el propmt. Pero le agregamos el message placeholder, para que me diga donde va la memoria, y cual es el input humano. Este input será mi query
+
+#Definimos la session de chat que me dara. En este caso uso la de SQL. aunque hay más opciones. Para un demo, este funciona bien
+def get_session_history (session_id):
+   return SQLChatMessageHistory(session_id, "sqlite:///memory.db")
+
+
+#Hacemos el runnable con la memoria. 
+runnable_rag_memory =  RunnableWithMessageHistory(rag_chain1, get_session_history,
+input_messages_key= "input",
+history_messages_key= "history")
+
+
+
+#-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+#Paso 11: Ponemos nuestra duda
 
 
 query = st.text_input('Ingresa tu duda')
 
-st.write ('Respuesta {query}')
+
+#Generamos la respuesta
+x = runnable_rag_memory.invoke({'input' : f' Soy un abogado que necesita que me resuelvas la siguiente duda {query}'},
+                             config ={"configurable": {"session_id": "1"}},
+)
+
+
+#La presentamos
+
+respuesta = x ['answer']
+
+st.write ('Respuesta {respuesta}')
 
 
 
