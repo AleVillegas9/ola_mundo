@@ -232,7 +232,7 @@ x = runnable_rag_memory.invoke({'input' : f' Soy un abogado que necesita que me 
 
 respuesta = x ['answer']
 
-st.write ('Respuesta {respuesta}')
+st.write (f'Respuesta {respuesta}')
 
 
 
