@@ -130,6 +130,8 @@ st.write(f'Haz seleccionado {categoria_usur}. El nombre de las normas relevantes
 
 #El problema, es que no me lo presenta en forma de texto, y no me dal el texto completo, una opcion podria hacer dos st.wrtie. uno con la primera parte de la categoria usada y el segudo con la respuesta. 
 
+#Hasta aqui funciona 13/08/24
+
 #*-*-**-*-*-*-*-*-*--*-*-
 
                 #Inicia la parte del chat con la norma. 
