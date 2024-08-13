@@ -111,24 +111,22 @@ Tengo el siguiene texto, el cual contiene una lista de uno o más  textos con no
 
 respuesta_limpia = str(llm.invoke(fake_system_prompt))
 
-import re
+# import re
 
-respuesta_limpia = re.search(r"content='(.*?)'", respuesta_limpia)
-if respuesta_limpia:
-    content_value = respuesta_limpia.group(1) #Aqui se guarda el string 
-    print(content_value)
-else:
-    print("No se encontró el contenido.")
+# respuesta_limpia = re.search(r"content='(.*?)'", respuesta_limpia)
+# if respuesta_limpia:
+#     content_value = respuesta_limpia.group(1) #Aqui se guarda el string 
+#     print(content_value)
+# else:
+#     print("No se encontró el contenido.")
     
-content_value = content_value
+# content_value = content_value
 
 #*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
 #Paso 7: Presentamos la respuesta
 
-
-
-st.write(f'haz seleccionado {categoria_usur} El nombre de las normas relevantes para tu caso son: {content_value}')
+st.write(f'haz seleccionado {categoria_usur} El nombre de las normas relevantes para tu caso son: {respuesta_limpia}')
 
 
 
