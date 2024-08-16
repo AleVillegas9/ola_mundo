@@ -83,6 +83,8 @@ retrieverprop = vector_store_clasificador.as_retriever(search_type = 'similarity
 
 
 #Primero que elija la categoria que quiere
+
+
 categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acuerdos Organizacionales del Consejo de la Judicatura Federal', 'Normatividad relevnte para Órganos Jurisdiccionales', 'Nomatividad relevante para Áreas Administrativas']) 
 
 
@@ -136,7 +138,8 @@ content_value = content_value
 
 #Paso 7: Presentamos la respuesta
 
-st.write(f'Haz seleccionado {categoria_usur}. El nombre de las normas relevantes para tu caso son: {content_value}')
+if st.button("Clasificar"):
+    st.write(f'Haz seleccionado {categoria_usur}. El nombre de las normas relevantes para tu caso son: {content_value}')
 
 #El problema, es que no me lo presenta en forma de texto, y no me dal el texto completo, una opcion podria hacer dos st.wrtie. uno con la primera parte de la categoria usada y el segudo con la respuesta. 
 
@@ -246,7 +249,9 @@ x = runnable_rag_memory.invoke({'input' : f' Soy un abogado que necesita que me 
 
 respuesta = x ['answer']
 
-st.write (f'Respuesta {respuesta}')
+
+if st.button("chatear"):
+    st.write (f'{respuesta}')
 
 
 
