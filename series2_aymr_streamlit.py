@@ -85,7 +85,7 @@ retrieverprop = vector_store_clasificador.as_retriever(search_type = 'similarity
 #Primero que elija la categoria que quiere
 
 
-categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acuerdos Organizacionales del Consejo de la Judicatura Federal', 'Normatividad relevnte para Órganos Jurisdiccionales', 'Nomatividad relevante para Áreas Administrativas']) 
+categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acuerdos Organizacionales del Consejo de la Judicatura Federal', 'Normatividad relevante para Órganos Jurisdiccionales', 'Nomatividad relevante para Áreas Administrativas']) 
 
 
 
@@ -143,7 +143,7 @@ x = content_value.replace('\n\n\n', '<br><br><br>').replace('\n\n', '<br><br>').
 
 
 if st.button("Clasificar"):
-    st.markdown(f'Las normas relevantes para la categoria seleccionada son: \n\n{x}', unsafe_allow_htlm = True)
+    st.markdown(f'Las normas relevantes para la categoria seleccionada son: \n\n{x}', unsafe_allow_html=True)
 
 
 
