@@ -85,7 +85,7 @@ retrieverprop = vector_store_clasificador.as_retriever(search_type = 'similarity
 #Primero que elija la categoria que quiere
 
 
-categoria_usur = st.multiselect("Elije la categoria que enmarca tu caso: ", ['Acuerdos Organizacionales del Consejo de la Judicatura Federal', 'Normatividad relevnte para Órganos Jurisdiccionales', 'Nomatividad relevante para Áreas Administrativas']) 
+categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acuerdos Organizacionales del Consejo de la Judicatura Federal', 'Normatividad relevnte para Órganos Jurisdiccionales', 'Nomatividad relevante para Áreas Administrativas']) 
 
 
 
