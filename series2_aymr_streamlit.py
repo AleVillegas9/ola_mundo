@@ -14,13 +14,19 @@ import streamlit as st
 
 #Paso 1: Datos generales
 
-st.image("judicatura.jpg", use_column_width=True) #Quizá también añadir un logotipo del proyecto. Que lo haga la IA xd. 
 
 st.title('Asistente jurídico Aymr') #Cambiar el nombre cuando se decida uno
 
+st.image("judicatura.jpg", use_column_width=True) #Quizá también añadir un logotipo del proyecto. Que lo haga la IA xd. 
+
+
 st.header("Aymr es un asistente jurídico, impulsado con inteligencia artificial, que te ayudará en la busqueda de normas que sean relevantes para tu caso. Además de que te permitirá interactuar con dichas normas. Su funcionamiento es muy sencillo. Primero debes de seleccionar la categoria en la que se enmarca tu caso en cuestión. Aymr te dará una lista de las normas con una mayor posibilidad de relacionarse con tu caso. Segundo, elije una norma con la que quieras chatear, y hazle preguntas.")  #Mejorar descripción
 
-st.header("Esta herramienta es sólo de apoyo para la labor de los abogados. DE NINGUNA MANERA SUSTITUYE LA LABOR DE INVESTIGACIÓN Y AUTONOMÍA DEL ABOGADO") #Pesar en más advertencias. 
+st.subheader("Esta herramienta es sólo de apoyo para la labor de los abogados. DE NINGUNA MANERA SUSTITUYE LA LABOR DE INVESTIGACIÓN Y AUTONOMÍA DEL ABOGADO") #Pesar en más advertencias. 
+
+st.header("Clasificador")
+
+st.write ("Instrucciones: A continuación se te presenta ua lista de distintas categorias en las que se clasifican las normas jurídicas. Por favor, selecciona la categoria de la cual te gustaría conocer los textos relacionados")
 
 #*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
@@ -84,6 +90,8 @@ query_class = f'¿Qué documentos tratan sobre la categoria {categoria_usur}'
 
 
 #Tercero hacemos la query
+
+
 respuestaprop = retrieverprop.invoke(query_class)
 
 
@@ -134,7 +142,11 @@ st.write(f'Haz seleccionado {categoria_usur}. El nombre de las normas relevantes
 
 #*-*-**-*-*-*-*-*-*--*-*-
 
+
                 #Inicia la parte del chat con la norma. 
+                
+st.header("Chat")
+st.subheader("Instrucciones: Selecciona el nombre de las normas con las cuales te gustaría chatear. A continuación, utiliza el espacio indicado para empezar a chatear con el conjunto de normas seleccionadas")
                 
 #Paso 8: Vectostore chat
 
