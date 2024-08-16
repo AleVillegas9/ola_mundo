@@ -118,16 +118,6 @@ llm = ChatOpenAI(
 fake_system_prompt = f"""
 Tengo el siguiene texto, el cual contiene una lista de uno o más  textos con nombre, links, y un resumen de los mismos. Por favor, hazme una nueva lista, numerada, en el que vengan esos tres datos por cada texto, pero donde se eliminen los textos repetidos. Deja de enumerar cuando ya no haya más textos nuevos. Entre cada enumaración de cada elemento deja doble espacio. De manera que pueda diferenciar entre cada elemento. El texto es {respuestaprop}
 
-Finalmente, quiero que tu respuesta siga elsiguiente molde:
-    
-1.Nombre de la norma
-Link
-Resumen
-
-
-2.Nombre de la norma
-Link
-Resumen
 """ 
 
 #Hacemos la limpieza de datos innecesarios
