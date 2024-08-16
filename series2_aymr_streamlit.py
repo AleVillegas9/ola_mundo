@@ -20,13 +20,12 @@ st.title('Asistente jurídico Aymr') #Cambiar el nombre cuando se decida uno
 st.image("judicatura.jpg", use_column_width=True) #Quizá también añadir un logotipo del proyecto. Que lo haga la IA xd. 
 
 
-st.header("Aymr es un asistente jurídico, impulsado con inteligencia artificial, que te ayudará en la busqueda de normas que sean relevantes para tu caso. Además de que te permitirá interactuar con dichas normas. Su funcionamiento es muy sencillo. Primero debes de seleccionar la categoria en la que se enmarca tu caso en cuestión. Aymr te dará una lista de las normas con una mayor posibilidad de relacionarse con tu caso. Segundo, elije una norma con la que quieras chatear, y hazle preguntas.")  #Mejorar descripción
+st.subheader("Aymr es un asistente jurídico, impulsado con inteligencia artificial, que te ayudará en la busqueda de normas que sean relevantes para tu caso. Además de que te permitirá interactuar con dichas normas. Su funcionamiento es muy sencillo. Primero debes de seleccionar la categoria en la que se enmarca tu caso en cuestión. Aymr te dará una lista de las normas con una mayor posibilidad de relacionarse con tu caso. Segundo, elije una norma con la que quieras chatear, y hazle preguntas.\n\ Esta herramienta es sólo de apoyo para la labor de los abogados. DE NINGUNA MANERA SUSTITUYE LA LABOR DE INVESTIGACIÓN Y AUTONOMÍA DEL ABOGADO  #Mejorar descripción")
 
-st.subheader("Esta herramienta es sólo de apoyo para la labor de los abogados. DE NINGUNA MANERA SUSTITUYE LA LABOR DE INVESTIGACIÓN Y AUTONOMÍA DEL ABOGADO") #Pesar en más advertencias. 
 
 st.header("Clasificador")
 
-st.write ("Instrucciones: A continuación se te presenta ua lista de distintas categorias en las que se clasifican las normas jurídicas. Por favor, selecciona la categoria de la cual te gustaría conocer los textos relacionados")
+st.subheader ("Instrucciones: A continuación se te presenta ua lista de distintas categorias en las que se clasifican las normas jurídicas. Por favor, selecciona la categoria de la cual te gustaría conocer los textos relacionados")
 
 #*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
@@ -251,12 +250,19 @@ st.write (f'Respuesta {respuesta}')
 #-*-*-*-*-*-*-**-*-**-*-*--*-*-*-*
 
                                     #Extras
+                                    
 
 #Paso 4: Referencias
 
-st.markdown("Enlace al consejo de la judicatura: (https://www.cjf.gob.mx/)") #Poner un enlace
-st.markdown("Enlace a la normativa aplicable: (https://apps.cjf.gob.mx/normativa/Index)") #Aqui poner los links al repositorio de normas.
+st.header ("Referencias")
 
-st.markdown("Enlace CIDE: (https://www.cide.edu/)")
+st.markdown("Enlace al consejo de la judicatura: https://www.cjf.gob.mx/") #Poner un enlace
+st.markdown("Enlace a la normativa aplicable: https://apps.cjf.gob.mx/normativa/Index") #Aqui poner los links al repositorio de normas.
+
+st.markdown("Enlace CIDE: https://www.cide.edu/")
+
+st.markdown("Cualquier duda, sugerencia, o error, por favor comunicarlo a jesus.villegas@alumnos.cide.edu")
+
+st.markdown("Aplicación realizada por: Abraxalandro")
 
 #Nota: ¿Qué otros links serían relevantes?
