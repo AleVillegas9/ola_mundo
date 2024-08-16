@@ -138,12 +138,12 @@ content_value = content_value
 #*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
 #Paso 7: Presentamos la respuesta
-content_value = content_value.replace('\n\n\n', '<br><br><br>').replace('\n\n', '<br><br>').replace('\n', '<br>')
+x = content_value.replace('\n\n\n', '<br><br><br>').replace('\n\n', '<br><br>').replace('\n', '<br>')
 
 
 
 if st.button("Clasificar"):
-    st.markdown(f'Las normas relevantes para la categoria seleccionada son: \n\n{content_value}', unsafe_allow_htlm = True)
+    st.markdown(f'Las normas relevantes para la categoria seleccionada son: \n\n{x}', unsafe_allow_htlm = True)
 
 
 
