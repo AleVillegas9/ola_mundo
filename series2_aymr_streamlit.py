@@ -140,7 +140,7 @@ content_value = content_value
 #Paso 7: Presentamos la respuesta
 
 if st.button("Clasificar"):
-    st.markdown(f'Las normas relevantes para la categoria seleccionada son: \n\n{content_value}')
+    st.write(f'Las normas relevantes para la categoria seleccionada son: \n\n{content_value}')
 
 
 
