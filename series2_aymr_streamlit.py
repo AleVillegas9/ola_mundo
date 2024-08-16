@@ -108,7 +108,7 @@ from langchain_openai import ChatOpenAI
 #cargamos el modelo
 llm = ChatOpenAI(
     openai_api_key= openai_api, 
-    model_name='gpt-4o',
+    model_name='gpt-4o-mini',
     temperature=0.0
 )
 
@@ -251,6 +251,16 @@ st.write (f'Respuesta {respuesta}')
 
 
 #-*-*-*-*-*-*-**-*-**-*-*--*-*-*-*
+#Paso 12: Limpiamos la sesion
+#Limpiar la sesion
+
+from sqlalchemy import create_engine
+
+engine = create_engine('sqlite:///memory.db')
+
+chat_history = SQLChatMessageHistory(session_id="1", connection_string= engine)
+
+chat_history.clear()
 
                                     #Extras
                                     
