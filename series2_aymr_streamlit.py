@@ -139,7 +139,7 @@ content_value = content_value
 #Paso 7: Presentamos la respuesta
 
 if st.button("Clasificar"):
-    st.write(f'Haz seleccionado {categoria_usur}. El nombre de las normas relevantes para tu caso son: {content_value}')
+    st.write(f'Las normas relevantes para la categoria seleccionada son {content_value}')
 
 #El problema, es que no me lo presenta en forma de texto, y no me dal el texto completo, una opcion podria hacer dos st.wrtie. uno con la primera parte de la categoria usada y el segudo con la respuesta. 
 
