@@ -90,7 +90,7 @@ categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acue
 
 
 #Segundo, construimos una query con esa categoria
-query_class = f'¿Qué documentos tratan sobre la categoria {categoria_usur}'
+query_class = f'¿Qué leyes tratan sobre la categoria {categoria_usur}'
 
 
 #Tercero hacemos la query
@@ -116,7 +116,7 @@ llm = ChatOpenAI(
 
 #Definimos el system prompt
 fake_system_prompt = f"""
-Tengo el siguiene texto, el cual contiene una lista de uno o más  textos con nombre, links, y un resumen de los mismos. Por favor, hazme una nueva lista, numerada, en el que vengan esos tres datos por cada texto, pero donde se eliminen los textos repetidos. Deja de enumerar cuando ya no haya más textos nuevos. Entre cada enumaración de cada elemento deja doble espacio. De manera que pueda diferenciar entre cada elemento. El texto es {respuestaprop}
+Tengo el siguiene texto, el cual contiene una lista de uno o más  textos con nombre, links, y un resumen de los mismos. Por favor, hazme una nueva lista, numerada, en el que vengan esos tres datos por cada texto, pero donde se eliminen los textos repetidos. Deja de enumerar cuando ya no haya más textos nuevos. Entre cada enumaración de cada elemento deja doble espacio. De manera que pueda diferenciar entre cada elemento. El texto contiene  \n y \n\n Dicha combinación de simbolos interpretala como saltos de linea, y  El texto es {respuestaprop}
 """ 
 
 #Hacemos la limpieza de datos innecesarios
@@ -139,7 +139,7 @@ content_value = content_value
 #Paso 7: Presentamos la respuesta
 
 if st.button("Clasificar"):
-    st.write(f'Las normas relevantes para la categoria seleccionada son {content_value}')
+    st.write(f'Las normas relevantes para la categoria seleccionada son:  {content_value}')
 
 #El problema, es que no me lo presenta en forma de texto, y no me dal el texto completo, una opcion podria hacer dos st.wrtie. uno con la primera parte de la categoria usada y el segudo con la respuesta. 
 
