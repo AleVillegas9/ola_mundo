@@ -144,7 +144,7 @@ x = content_value.replace('\n\n\n', '<br><br><br>').replace('\n\n', '<br><br>').
 
 if st.button("Clasificar"):
     st.markdown('Las normas relevantes para la categoria seleccionada son:')
-    st.write (print(x))
+    st.write (print(content_value))
 
 
 
