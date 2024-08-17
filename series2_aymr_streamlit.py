@@ -157,8 +157,10 @@ if st.button("Clasificar"):
                 #Inicia la parte del chat con la norma. 
                 
 st.header("Chat")
-st.subheader("Instrucciones: Selecciona el nombre de las normas con las cuales te gustaría chatear. A continuación, utiliza el espacio indicado para empezar a chatear con el conjunto de normas seleccionadas")
-                
+st.subheader("Instrucciones: Primero, ingresa tu nombre. Despuéss selecciona el nombre de las normas con las cuales te gustaría chatear. A continuación, utiliza el espacio indicado para empezar a chatear con el conjunto de normas seleccionadas")
+
+id_session = st.text_input ("Ingresa tu nombre")
+
 #Paso 8: Vectostore chat
 
 
@@ -242,13 +244,15 @@ history_messages_key= "history")
 #Paso 11: Ponemos nuestra duda
 
 
+
+
+
 query = st.text_input('Ingresa tu duda')
 
 
 #Generamos la respuesta
-x = runnable_rag_memory.invoke({'input' : f' Soy un abogado que necesita que me resuelvas la siguiente duda {query}'},
-                             config ={"configurable": {"session_id": "1"}},
-)
+x = runnable_rag_memory.invoke({'input' : f' Soy un abogado que necesita que me resuelvas la siguiente duda {query}. '},
+                             config ={"configurable": {"session_id": f"{id_session}"}},)
 
 
 #La presentamos
@@ -267,12 +271,12 @@ if st.button("chatear"):
 
 from sqlalchemy import create_engine
 
-engine = create_engine('sqlite:///memory.db')
 
-chat_history = SQLChatMessageHistory(session_id="1", connection_string= engine)
-
-chat_history.clear()
-
+if st.button("Presiona aqui al términar de usar el chat"):
+    engine = create_engine('sqlite:///memory.db')
+    chat_history = SQLChatMessageHistory(session_id= id_session, connection_string= engine)
+    chat_history.clear
+    
                                     #Extras
                                     
 
