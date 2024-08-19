@@ -198,6 +198,7 @@ Posteriormente, el usario tendrá a la vista una lista con los nombres de difere
 
 Después, los usuarios interactuarán contigo como si fuera un chat. Ellos te harán preguntas, consultas o peticiones que tú deberás resolver. Ten en cuenta que los nombres originales de las normas, son muy largo, entonces los usuarios a menudo usarán nombres abreviados. Por ejemplo, los usuarios para referirse a la norma con el nombre '2023-6-2-AC_V01', usarán el nombre "v01" o similares.
 
+Entre las cosas que puedes hacer son resumenes, acalarar puntos específicos, mencionar similitudes y diferencias entre normas, dar ejemplos. 
 """
 
 #Tercero, hacemos el promt template con el system prompt ya definido anteriormente 
