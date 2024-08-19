@@ -28,7 +28,7 @@ st.subheader(" ADVERTENCIA: Esta herramienta es sólo de apoyo para la labor de 
 
 st.header("Clasificador")
 
-st.subheader ("Instrucciones: A continuación se te presenta ua lista de distintas categorias en las que se clasifican las normas jurídicas. Por favor, selecciona la categoria de la cual te gustaría conocer los textos relacionados")
+st.subheader ("Instrucciones: A continuación se te presenta una lista de distintas categorias en las que se clasifican las normas jurídicas. Por favor, selecciona la categoria de la cual te gustaría conocer los textos relacionados")
 
 #*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
@@ -92,7 +92,7 @@ categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acue
 #Segundo, construimos una query con esa categoria
 query_class = f'¿Qué normativa refiere a la categoria llamada {categoria_usur}?' 
 
-#Entre más especifico lo haga, mejores resultados. 
+#NOTA de mejora: Entre más especifico lo haga, mejores resultados. Se podría agregar una descripción más detallada de lo que implica cada categoria. 
 
 
 #Tercero hacemos la query
@@ -152,7 +152,6 @@ if st.button("Clasificar"):
 
 #El problema, es que no me lo presenta en forma de texto, y no me dal el texto completo, una opcion podria hacer dos st.wrtie. uno con la primera parte de la categoria usada y el segudo con la respuesta. 
 
-#Hasta aqui funciona 13/08/24
 
 #*-*-**-*-*-*-*-*-*--*-*-
 
@@ -191,7 +190,11 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 #Nota: Esto cambiará para cuando se de la opcion de elegir las normas con la que quieres chatear
 
 system_prompt1 = f"""
-Eres un consultor experto en leyes. Por lo cual, vas a contestar las preguntas que se te hagan, de una manera clara y precisa. Para tu respuesta sólo toma en cuenta las normas que tengan el siguiente nombre {norma_chat}
+
+Eres un programa diseñado para un uso consultivo por parte de un área experta en leyes. Por lo tanto, vas a contestar todo lo que te digan los usuarios como si fueras un consultor experto, y lo vas a contestar de manera clara y precisa. Con ejemplos, si estos son pertinentes. Para inicar el programa, los usuarios pondrán su nombre. Posteriormente, de una lista seleccionarán las normas que quieren que tú tomes en cuenta para responder. Dicha lista es  {norma_chat}. 
+
+Ten en cuenta que para referirse a las normas, los usuarios a menudo no utilizarán el nombre completo de las normas, sino abreviaciones, o quizá el última parte de su nombre, como por ejemplo, la norma 2020-3-1-AC_V02 será referida como V02.
+
 """
 
 #Tercero, hacemos el promt template con el system prompt ya definido anteriormente 
@@ -245,8 +248,6 @@ history_messages_key= "history")
 #-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 #Paso 11: Ponemos nuestra duda
-
-
 
 
 
