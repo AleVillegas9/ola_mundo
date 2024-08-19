@@ -90,7 +90,7 @@ categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acue
 
 
 #Segundo, construimos una query con esa categoria
-query_class = f'¿Qué leyes tratan sobre la categoria {categoria_usur}'
+query_class = f'¿Qué normativa puede caer bajo sobre la categoria {categoria_usur}'
 
 
 #Tercero hacemos la query
@@ -146,6 +146,7 @@ if st.button("Clasificar"):
               {content_value}
               """)
 
+#INTENTA DIVIDIRLO 
 
 #El problema, es que no me lo presenta en forma de texto, y no me dal el texto completo, una opcion podria hacer dos st.wrtie. uno con la primera parte de la categoria usada y el segudo con la respuesta. 
 
