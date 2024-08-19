@@ -90,7 +90,9 @@ categoria_usur = st.selectbox("Elije la categoria que enmarca tu caso: ", ['Acue
 
 
 #Segundo, construimos una query con esa categoria
-query_class = f'¿Qué normativa puede caer bajo sobre la categoria {categoria_usur}'
+query_class = f'¿Qué normativa refiere a la categoria llamada {categoria_usur}?' 
+
+#Entre más especifico lo haga, mejores resultados. 
 
 
 #Tercero hacemos la query
