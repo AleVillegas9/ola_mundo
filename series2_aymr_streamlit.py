@@ -112,7 +112,7 @@ from langchain_openai import ChatOpenAI
 #cargamos el modelo
 llm = ChatOpenAI(
     openai_api_key= openai_api, 
-    model_name='gpt-4o-mini',
+    model_name='gpt-4o',
     temperature=0.0
 )
 
