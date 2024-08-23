@@ -128,6 +128,45 @@ else:
 content_value = content_value
 
 #*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+#Primera modificación al código original, peresentaré la respuesta en forma de chat
+
+#Paso 7: Cargo el vectostore del chat
+
+indexs2 = pc.Index('indexs2')
+
+vector_store_chat = PineconeVectorStore(index = indexs2, embedding= embeddings, text_key= 'contenido')
+
+#-*-*-*-*-*-*-*-*-*-*-*-*-
+
+#Paso 8: Hago un systempropmt limpiador
+
+propmt_class = f"""
+Por favor, presenta únicamente el siguiente texto sustituyendo los /n por espacios y saltos de linea según corresponda al lenguaje de programación python.
+
+El texto es: {content_value}
+"""
+
+#-*-*-*-*-*-*
+
+#Paso 9: Lo metemos en una cadena de chat
+
+from langchain.chains import create_retrieval_chain
+from langchain_core.prompts import ChatPromptTemplate
+from langchain.chains.combine_documents import create_stuff_documents_chain
+
+
+
+promptclass = ChatPromptTemplate.from_messages(
+    [("system", propmt_class), #lo que va entre " " es como el rol que ese espera que siga la instruccion que va del otro lado e la coma. en este sentido, le digo que el sistema debe adoptar ese systempropmt
+     ("human", "{context}"),]) #aqui el papel de humano adoptara lo que sea que le pregunte
+
+
+retrieverclass = vector_store_chat.as_retriever()
+
+
+#Quinto, creamos el question answer chain y el rag chain
+
+question_answer_chain_class = create_stuff_documents_chain(llm, promptclass) #aqui recupro el promp y el llm que usare
 
 #Paso 7: Presentamos la respuesta
 
@@ -135,8 +174,10 @@ content_value = content_value
 if st.button("Clasificar"):
     st.markdown('Las normas relevantes para la categoria seleccionada son:')
     st.write (f"""
-              {content_value}
+              {question_answer_chain_class}
               """)
+              
+#-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-
 #Inicia la parte del chat con la norma. 
                 
 st.header("Chat")
@@ -147,9 +188,9 @@ id_session = st.text_input ("Ingresa tu nombre")
 #Paso 8: Vectostore chat
 
 
-indexs2 = pc.Index('indexs2')
+# indexs2 = pc.Index('indexs2')
 
-vector_store_chat = PineconeVectorStore(index = indexs2, embedding= embeddings, text_key= 'contenido')
+# vector_store_chat = PineconeVectorStore(index = indexs2, embedding= embeddings, text_key= 'contenido')
 
 #*-*-*-*-*-*-*-*
 
