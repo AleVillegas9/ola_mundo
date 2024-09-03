@@ -44,4 +44,4 @@ nom_a_a = '1. Nombre de la Norma: 2014-56-1-AC_V80 \n Link: https://apps.cjf.gob
 
 #Prueba
 
-st.write (f'{acu_org}')
+st.write (f'{nom_a_a}')
