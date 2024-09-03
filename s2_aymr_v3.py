@@ -29,3 +29,16 @@ st.header("Clasificador")
 
 st.subheader ("Instrucciones: A continuación se te presenta una lista de distintas categorias en las que se clasifican las normas jurídicas. Por favor, selecciona la categoria de la cual te gustaría conocer los textos relacionados")
 
+#*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+                                #Clasificador
+#Nota importante: El proceso de clasificación se llevó  cabo en un paso previo (Ver archivo de clasifiación). Por cuestiones de optimización, así solamente se recuperan los resultados de ese proceso, y se liga cada categoria con el resulado arrojado previamente.  (Ver paso 12 de series2_aymr_clasificador)
+
+
+
+acu_org = 
+
+nom_org_ju = 
+
+
+
