@@ -134,7 +134,7 @@ content_value = content_value
 
 indexs2 = pc.Index('indexs2')
 
-vector_store_chat = PineconeVectorStore(index = indexs2, embedding= embeddings, text_key= 'contenido')
+vector_store_chat_class = PineconeVectorStore(index = indexs2, embedding= embeddings, text_key= 'contenido')
 
 #-*-*-*-*-*-*-*-*-*-*-*-*-
 
@@ -161,14 +161,14 @@ promptclass = ChatPromptTemplate.from_messages(
      ("human", "{context}"),]) #aqui el papel de humano adoptara lo que sea que le pregunte
 
 
-retrieverclass = vector_store_chat.as_retriever()
+retrieverclass = vector_store_chat_class.as_retriever()
 
 
 #Quinto, creamos el question answer chain y el rag chain
 
 question_answer_chain_class = create_stuff_documents_chain(llm, promptclass) #aqui recupro el promp y el llm que usare
 
-#Paso 7: Presentamos la respuesta
+#Paso 10: Presentamos la respuesta
 
 
 if st.button("Clasificar"):
@@ -176,151 +176,138 @@ if st.button("Clasificar"):
     st.write (f"""
               {question_answer_chain_class}
               """)
-              
-# #-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-
-# #Inicia la parte del chat con la norma. 
+
+
+#-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-
+#Inicia la parte del chat con la norma. 
+
+#Paso 11: Header y nombre
                 
-# st.header("Chat")
-# st.subheader("Instrucciones: Primero, ingresa tu nombre. Despuéss selecciona el nombre de las normas con las cuales te gustaría chatear. A continuación, utiliza el espacio indicado para empezar a chatear con el conjunto de normas seleccionadas")
+st.header("Chat")
+st.subheader("Instrucciones: Primero, ingresa tu nombre. Despuéss selecciona el nombre de las normas con las cuales te gustaría chatear. A continuación, utiliza el espacio indicado para empezar a chatear con el conjunto de normas seleccionadas")
 
-# id_session = st.text_input ("Ingresa tu nombre")
+id_session = st.text_input ("Ingresa tu nombre")
 
-# #Paso 8: Vectostore chat
+#-*-*-*-*-*-*-*
+
+# #Paso 12: Vectostore chat
 
 
-# # indexs2 = pc.Index('indexs2')
+indexs2 = pc.Index('indexs2')
 
-# # vector_store_chat = PineconeVectorStore(index = indexs2, embedding= embeddings, text_key= 'contenido')
+vector_store_chat = PineconeVectorStore(index = indexs2, embedding= embeddings, text_key= 'contenido')
 
-# #*-*-*-*-*-*-*-*
+#*-*-*-*-*-*-*-*
 
-# #Paso 9: Hacemos el cuadro de selecccion sobre que con cuales normas quiere chatear el usuario. 
+#Paso 13: Hacemos el cuadro de selecccion sobre que con cuales normas quiere chatear el usuario. 
 
-# norma_chat = st.multiselect("Elije la o las normas con la que deseas chatear chatear: ",['2013-3-0-AC_V317', '2013-40-2-AC_V72', '2014-36-0-AC_V18', '2014-56-1-AC_V80', '2014-56-2-AC_V37', '2018-28-2-AC_V03', '2018-45-1-AC_V12', '2019-9-2-AC_V05', '2020-3-1-AC_V02', '2020-12-0-AC_V07', '2021-0-134-DD_V15', '2023-6-2-AC_V01'])
+norma_chat = st.multiselect("Elije la o las normas con la que deseas chatear chatear: ",['2013-3-0-AC_V317', '2013-40-2-AC_V72', '2014-36-0-AC_V18', '2014-56-1-AC_V80', '2014-56-2-AC_V37', '2018-28-2-AC_V03', '2018-45-1-AC_V12', '2019-9-2-AC_V05', '2020-3-1-AC_V02', '2020-12-0-AC_V07', '2021-0-134-DD_V15', '2023-6-2-AC_V01'])
                           
 # #-*-*-*-*-*-**-*-**-
 
 
-# #Paso 10: Hacemos el rag chain
+# #Paso 14: Hacemos el rag chain
 
-# #Primero cargamos las librerias para hacer el chat, y los system prompts
-# from langchain.chains import create_retrieval_chain
-# from langchain_core.prompts import ChatPromptTemplate
-# from langchain.chains.combine_documents import create_stuff_documents_chain
+#Primero cargamos las librerias para hacer el chat, y los system prompts
+from langchain_core.prompts import ChatPromptTemplate
+from langchain.chains.combine_documents import create_stuff_documents_chain
 
-# #Segundo definimos el systemprompt
-# #Nota: Esto cambiará para cuando se de la opcion de elegir las normas con la que quieres chatear
+#Segundo definimos el systemprompt
+#Nota: Esto cambiará para cuando se de la opcion de elegir las normas con la que quieres chatear
 
-# system_prompt1 = f"""
-
-
-# Eres un programa diseñado para un uso consultivo por parte de un área experta en leyes. Por lo tanto, vas a contestar todo lo que te digan los usuarios como si fueras un consultor experto, y lo vas a contestar de manera clara y precisa. Con ejemplos, si estos son pertinentes. 
-
-# Posteriormente, el usario tendrá a la vista una lista con los nombres de diferentes normas. Para tus respuestas, sólo deberás tomar en cuenta las normas que se mencionen en {norma_chat}. Dichas normas, son las normas que el usuario seleccionó. 
-
-# Después, los usuarios interactuarán contigo como si fuera un chat. Ellos te harán preguntas, consultas o peticiones que tú deberás resolver. Ten en cuenta que los nombres originales de las normas, son muy largo, entonces los usuarios a menudo usarán nombres abreviados. Por ejemplo, los usuarios para referirse a la norma con el nombre '2023-6-2-AC_V01', usarán el nombre "v01" o similares.
-
-# Entre las cosas que puedes hacer son resumenes, acalarar puntos específicos, mencionar similitudes y diferencias entre normas, dar ejemplos. 
-# """
-
-# #Tercero, hacemos el promt template con el system prompt ya definido anteriormente 
-# prompt = ChatPromptTemplate.from_messages(
-#     [("system", system_prompt1), #lo que va entre " " es como el rol que ese espera que siga la instruccion que va del otro lado e la coma. en este sentido, le digo que el sistema debe adoptar ese systempropmt
-#      ("human", "{context}"),]) #aqui el papel de humano adoptara lo que sea que le pregunte
-
-# #fuente: https://api.python.langchain.com/en/latest/prompts/langchain_core.prompts.chat.ChatPromptTemplate.html
+system_prompt1 = f"""
 
 
-# #Transformamos el vectorstore en retriever
+Eres un programa diseñado para un uso consultivo por parte de un área experta en leyes. Por lo tanto, vas a contestar todo lo que te digan los usuarios como si fueras un consultor experto, y lo vas a contestar de manera clara y precisa. Con ejemplos, si estos son pertinentes. 
+
+Posteriormente, el usario tendrá a la vista una lista con los nombres de diferentes normas. Para tus respuestas, sólo deberás tomar en cuenta las normas que se mencionen en {norma_chat}. Dichas normas, son las normas que el usuario seleccionó. 
+
+Después, los usuarios interactuarán contigo como si fuera un chat. Ellos te harán preguntas, consultas o peticiones que tú deberás resolver. Ten en cuenta que los nombres originales de las normas, son muy largo, entonces los usuarios a menudo usarán nombres abreviados. Por ejemplo, los usuarios para referirse a la norma con el nombre '2023-6-2-AC_V01', usarán el nombre "v01" o similares.
+
+Entre las cosas que puedes hacer son resumenes, acalarar puntos específicos, mencionar similitudes y diferencias entre normas, dar ejemplos. 
+"""
+
+#Tercero, hacemos el promt template con el system prompt ya definido anteriormente 
+prompt = ChatPromptTemplate.from_messages(
+    [("system", system_prompt1), #lo que va entre " " es como el rol que ese espera que siga la instruccion que va del otro lado e la coma. en este sentido, le digo que el sistema debe adoptar ese systempropmt
+      ("human", "{context}"),]) #aqui el papel de humano adoptara lo que sea que le pregunte
+
+#fuente: https://api.python.langchain.com/en/latest/prompts/langchain_core.prompts.chat.ChatPromptTemplate.html
 
 
-# retriever = vector_store_chat.as_retriever()
+#Transformamos el vectorstore en retriever
 
 
-# #Quinto, creamos el question answer chain y el rag chain
-
-# question_answer_chain = create_stuff_documents_chain(llm, prompt) #aqui recupro el promp y el llm que usare
-
-# rag_chain1 = create_retrieval_chain(retriever, question_answer_chain) #aqui recupero el rago con la variable retriever
-
-# #*-*-*-*-*-*-*-*-*-*-*-*-*-
-# #Paso 10: memory
-
-# from langchain_core.runnables.history import RunnableWithMessageHistory
-
-# from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-
-# from langchain_community.chat_message_histories import SQLChatMessageHistory
+retriever = vector_store_chat.as_retriever()
 
 
-# #Recuperamos el system propmt
-# propmt_memory = ChatPromptTemplate.from_messages(
-#     [("system", "Eres un consultor experto en leyes. Por lo cual, vas a contestar las preguntas que se te hagan, de una manera clara y precisa."),
-#        MessagesPlaceholder(variable_name="history"),
-#        ("human", "{input}")]) #Aqui rescatamos el propmt. Pero le agregamos el message placeholder, para que me diga donde va la memoria, y cual es el input humano. Este input será mi query
+#Quinto, creamos el question answer chain y el rag chain
 
-# #Definimos la session de chat que me dara. En este caso uso la de SQL. aunque hay más opciones. Para un demo, este funciona bien
-# def get_session_history (session_id):
-#    return SQLChatMessageHistory(session_id, "sqlite:///memory.db")
+question_answer_chain = create_stuff_documents_chain(llm, prompt) #aqui recupro el promp y el llm que usare
+
+rag_chain1 = create_retrieval_chain(retriever, question_answer_chain) #aqui recupero el rago con la variable retriever
 
 
-# #Hacemos el runnable con la memoria. 
-# runnable_rag_memory =  RunnableWithMessageHistory(rag_chain1, get_session_history,
-# input_messages_key= "input",
-# history_messages_key= "history")
+#-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+#Paso 15: Hacemos la función que me dará las respuestas del chat
 
 
+def get_bot_response (user_massage):
+    response = rag_chain1.invoke(user_massage)
+    return response 
 
-# #-*-*-*-*-*-*-*-*-*-*-*-*-*
+#-*-*-*-*-*-*-*
 
-# #Paso 11: Ponemos nuestra duda
+#Paso 16: Almacenamos mensajes en la sesión
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+#-*-*-*-*-*-**
+
+#Paso 17: Definimos función para envíar mensajes.
+
+def send_message():
+    user_message = st.session_state.user_input
+    if user_message:
+        bot_response = get_bot_response(user_message)  # Genera la respuesta del bot
+        st.session_state.messages.append({"user": user_message, "bot": bot_response})
+        st.session_state.user_input = ""
+        
+# Entrada de texto para el usuario
+st.text_input("Tu mensaje:", key="user_input", on_change=send_message)
 
 
 
-# query = st.text_input('Ingresa tu duda')
-
-
-# #Generamos la respuesta
-# x = runnable_rag_memory.invoke({'input' : f' Soy un abogado que necesita que me resuelvas la siguiente duda {query}. '},
-#                              config ={"configurable": {"session_id": f"{id_session}"}},)
-
-
-# #La presentamos
-
-# respuesta = x ['answer']
-
-
-# if st.button("chatear"):
-#     st.write (f'{respuesta}')
-
+# Mostrar el chat
+for message in st.session_state.messages:
+    with st.chat_message("user"):
+        st.markdown(message["user"])
+    with st.chat_message("bot"):
+        st.markdown(message["bot"])
 
 
 # #-*-*-*-*-*-*-**-*-**-*-*--*-*-*-*
 # #Paso 12: Limpiamos la sesion
-# #Limpiar la sesion
 
-# from sqlalchemy import create_engine
-
-
-# if st.button("Presiona aqui al términar de usar el chat"):
-#     engine = create_engine('sqlite:///memory.db')
-#     chat_history = SQLChatMessageHistory(session_id= id_session, connection_string= engine)
-#     chat_history.clear
-    
-#                                     #Extras
+# Botón para limpiar el chat
+if st.button("Limpiar Chat"):
+    st.session_state.messages = []  # Limpia la lista de mensajes                           #Extras
                                     
+
+
 
 # #Paso 4: Referencias
 
-# st.header ("Referencias")
+st.header ("Referencias")
 
-# st.markdown("Enlace al consejo de la judicatura: https://www.cjf.gob.mx/") #Poner un enlace
-# st.markdown("Enlace a la normativa aplicable: https://apps.cjf.gob.mx/normativa/Index") #Aqui poner los links al repositorio de normas.
+st.markdown("Enlace al consejo de la judicatura: https://www.cjf.gob.mx/") #Poner un enlace
+st.markdown("Enlace a la normativa aplicable: https://apps.cjf.gob.mx/normativa/Index") #Aqui poner los links al repositorio de normas.
 
-# st.markdown("Enlace CIDE: https://www.cide.edu/")
+st.markdown("Enlace CIDE: https://www.cide.edu/")
 
-# st.markdown("Cualquier duda, sugerencia, o error, por favor comunicarlo a jesus.villegas@alumnos.cide.edu")
+st.markdown("Cualquier duda, sugerencia, o error, por favor comunicarlo a jesus.villegas@alumnos.cide.edu")
 
-# st.markdown("Aplicación realizada por: Abraxalandro")
+st.markdown("Aplicación realizada por: Abraxalandro")
 
-# #Nota: ¿Qué otros links serían relevantes?
+#Nota: ¿Qué otros links serían relevantes?
