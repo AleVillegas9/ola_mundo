@@ -62,10 +62,10 @@ st.header("Chat")
 st.subheader("Instrucciones")
 
 st.write(""""
-         1. Selecciona el nombre de la o las normas con las que deseas chatear\n\n\n
-         2. Utiliza el espacio de texto realizar una consulta. La consulta puede ser una pregunta, o alguna instrucción, como por ejemplo, detallar un aspecto de las normas seleccionadas. \n\n\n
-         3. Pulsa chatear\n\n\n
-         4. Ingresa las consultas que deseees
+         1. Selecciona el nombre de la o las normas con las que deseas chatear
+         \n\n\n2. Utiliza el espacio de texto realizar una consulta. La consulta puede ser una pregunta, o alguna instrucción, como por ejemplo, detallar un aspecto de las normas seleccionadas.
+         \n\n\n3. Pulsa chatear
+         \n\n\n4. Ingresa las consultas que deseees
          """)
 
         
