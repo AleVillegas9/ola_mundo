@@ -84,7 +84,7 @@ if "messages" not in st.session_state:
 def send_message():
     user_message = st.session_state.user_input
     if user_message:
-        st.sessin_state.messages.append({"user":user_message, "bot": "Soy Aymr. Si ya seleccionaste las normas sobre las que estas interesado, por favor haz una conulta"})
+        st.session_state.messages.append({"user":user_message, "bot": "Soy Aymr. Si ya seleccionaste las normas sobre las que estas interesado, por favor haz una conulta"})
         st.session_state.user_input = ""
 
 #Entrada de texto para el usuario
