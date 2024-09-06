@@ -105,7 +105,7 @@ for message in st.session_state.messages:
 #Paso X: Limpiar el chat
 
 if st.button("Limpiar chat// reiniciar aplicación"):
-    st.experimental_rerun()
+    st.experimental_rerun
 
 #-**-**-*-*-*-**- 
 #Psso X+1 Referencias
