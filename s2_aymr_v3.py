@@ -68,6 +68,7 @@ st.write("""
          \n\n\n2. Utiliza el espacio de texto realizar una consulta. La consulta puede ser una pregunta, o alguna instrucción, como por ejemplo, detallar un aspecto de las normas seleccionadas.
          \n\n\n3. Pulsa chatear
          \n\n\n4. Ingresa las consultas que deseees
+         \n\n\n5. Cuando termines de usar el chat, por favor "limpia la sessión presionando el botón correspondiente"
          """)
 
 normas_chat = st.multiselect("Elije la o las normas con la que deseas chatear chatear: ",['2013-3-0-AC_V317', '2013-40-2-AC_V72', '2014-36-0-AC_V18', '2014-56-1-AC_V80', '2014-56-2-AC_V37', '2018-28-2-AC_V03', '2018-45-1-AC_V12', '2019-9-2-AC_V05', '2020-3-1-AC_V02', '2020-12-0-AC_V07', '2021-0-134-DD_V15', '2023-6-2-AC_V01'])
@@ -84,13 +85,12 @@ if "messages" not in st.session_state:
 def send_message():
     user_message = st.session_state.user_input
     if user_message:
-        st.session_state.messages.append({"user":user_message, "bot": "Soy Aymr. Si ya seleccionaste las normas sobre las que estas interesado, por favor haz una conulta"})
+        st.session_state.messages.append({"user":user_message, "bot": "Soy Aymr. Si ya seleccionaste las normas sobre las que estas interesado, por favor haz una consulta"})
         st.session_state.user_input = ""
 
 #Entrada de texto para el usuario
 
 st.text_input ("Tu mensaje", key = "user_input", on_change=send_message)
-
 
 #Mostrar el chat
 
@@ -99,3 +99,26 @@ for message in st.session_state.messages:
         st.markdown(message["user"])
     with st.chat_message("bot"):
         st.markdown (message["bot"])
+        
+#-**-*-*-*-*-*-*-*-*-*-*-*
+
+#Paso X: Limpiar el chat
+
+if st.button("Limpiar chat// reiniciar aplicación"):
+    st.experimental_rerun()
+
+#-**-**-*-*-*-**- 
+#Psso X+1 Referencias
+
+st.header ("Referencias")
+
+st.markdown("Enlace al consejo de la judicatura: https://www.cjf.gob.mx/") #Poner un enlace
+st.markdown("Enlace a la normativa aplicable: https://apps.cjf.gob.mx/normativa/Index") #Aqui poner los links al repositorio de normas.
+
+st.markdown("Enlace CIDE: https://www.cide.edu/")
+
+st.markdown("Cualquier duda, sugerencia, o error, por favor comunicarlo a jesus.villegas@alumnos.cide.edu")
+
+st.markdown("Aplicación realizada por: Abraxalandro")
+
+#Nota: ¿Qué otros links serían relevantes?
