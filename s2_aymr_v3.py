@@ -77,24 +77,25 @@ normas_chat = st.multiselect("Elije la o las normas con la que deseas chatear ch
 #Paso 5: El chat
 
 #Para almacenar los mensajes en una sesion
-if "messages" not in st.session_state:
-    st.session_state.messages = []
+if "messages" not in st.session_state: #session_state hace un diccionario
+    st.session_state.messages = [] #crea una lista vacia para guadar tanto los mensajes mios como los del bot
 
 #Funcion para enviar mensajes
 
 def send_message():
-    user_message = st.session_state.user_input
+    user_message = st.session_state.user_input #toma el texto del usuario y lo guarda en una variable user_message
     if user_message:
-        st.session_state.messages.append({"user":user_message, "bot": "Soy Aymr. Si ya seleccionaste las normas sobre las que estas interesado, por favor haz una consulta"})
-        st.session_state.user_input = ""
+        st.session_state.messages.append({"user":user_message, "bot": "Soy Aymr. Si ya seleccionaste las normas sobre las que estas interesado, por favor haz una consulta"}) #recupera la respuesra del usuario, y da la respuesta del bot
+        st.session_state.user_input = "" #vacia el campo para que el usuario ponga más cosas
 
 #Entrada de texto para el usuario
 
-st.text_input ("Tu mensaje", key = "user_input", on_change=send_message)
+st.text_input ("Tu mensaje", key = "user_input", on_change=send_message) #key = nombre del ussairoo, que está en st.session_state.  on_change = me dice con que funcion de mensaje se va a usar el input
+
 
 #Mostrar el chat
 
-for message in st.session_state.messages:
+for message in st.session_state.messages: #itera sobre todos los mensajes guardados. Esto es lo que permite que se tenga memoria. 
     with st.chat_message("user"):
         st.markdown(message["user"])
     with st.chat_message("bot"):
@@ -102,10 +103,10 @@ for message in st.session_state.messages:
         
 #-**-*-*-*-*-*-*-*-*-*-*-*
 
-#Paso X: Limpiar el chat
+#Paso X: Limpiar el chat (PENDIENTE. ME ARROJA ERROR)
 
 if st.button("Limpiar chat// reiniciar aplicación"):
-    st.experimental_rerun
+    st.session_state.messages = []
 
 #-**-**-*-*-*-**- 
 #Psso X+1 Referencias
