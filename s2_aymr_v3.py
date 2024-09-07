@@ -98,7 +98,7 @@ from pinecone import Pinecone
 #Guardamos el secreto
 #Nota. Guardar el secreto en streamlit
 
-pinecone_api = st.secrets['pinecone_apikey']
+pinecone_api = st.secrets['pinecone_api']
 
 #hacemos la variable
 pc = Pinecone(
