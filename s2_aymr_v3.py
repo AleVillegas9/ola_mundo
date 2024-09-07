@@ -98,7 +98,7 @@ from pinecone import Pinecone
 #Guardamos el secreto
 #Nota. Guardar el secreto en streamlit
 
-pinecone_api = st.secrets['pinecone_api']
+pinecone_api = st.secrets['pinecone_api'] #waaaa
 
 #hacemos la variable
 pc = Pinecone(
@@ -137,7 +137,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 #Segundo definimos el systemprompt
 #Nota//punto de mejora: Esto cambiará para cuando se de la opcion de elegir las normas con la que quieres chatear. Esto también seria un punto de mejora, pues la idea es que, en tanto más específico sea el systempropmt mejores respuestas dara. Ideas 1) El mismo systemprompt podría ser un rag chain. 2) expertos. 
 
-system_prompt1 = (f"Eres un consultor experto en leyes. Por lo cual, vas a contestar las preguntas que se te hagan, de una manera clara y precisa. Para responder, te basarás sólo en los documentos que tengan el siguiente nombre {normas_chat}")
+system_prompt1 = (f"Eres un consultor experto en leyes. Por lo cual, vas a contestar las preguntas que se te hagan, de una manera clara y precisa. Para responder, te basarás sólo en los documentos que tengan el siguiente nombre {normas_chat}. Además, por favor consteta a los usuarios de manera amigable. Porbablemente te digan sus nombres. Su edad, a que se dedican. Datos por el estilo. ")
 
 #Tercero, hacemos el promt template con el system prompt ya definido anteriormente 
 prompt = ChatPromptTemplate.from_messages(
