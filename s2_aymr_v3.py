@@ -74,19 +74,129 @@ st.write("""
 normas_chat = st.multiselect("Elije la o las normas con la que deseas chatear chatear: ",['2013-3-0-AC_V317', '2013-40-2-AC_V72', '2014-36-0-AC_V18', '2014-56-1-AC_V80', '2014-56-2-AC_V37', '2018-28-2-AC_V03', '2018-45-1-AC_V12', '2019-9-2-AC_V05', '2020-3-1-AC_V02', '2020-12-0-AC_V07', '2021-0-134-DD_V15', '2023-6-2-AC_V01'])
 
 #-*-*-*-*-*-*-*-*-*-*-*
-#Paso 5: El chat
+#Paso 5: Preparativos: Sesión
 
-#Para almacenar los mensajes en una sesion
+
+#A) Creamos una sesion para almacenar los mensajes en una sesion
 if "messages" not in st.session_state: #session_state hace un diccionario
     st.session_state.messages = [] #crea una lista vacia para guadar tanto los mensajes mios como los del bot
+    
+#B) Limpiar el chat anterior
 
-#Funcion para enviar mensajes
+if st.button("Limpiar chat// reiniciar aplicación"):
+    st.session_state.messages = []
+
+#Posible mejora: Que se ejecute cuando se refresque la página. 
+#Posible mejora 2: Que el usuario ponga su nombre. Aunque aqui el problema sería eliminar todas las sesiones. 
+
+#-*-*-*-**-*-*-*--*-*-
+
+#Paso 6:Iniciamos el index de pinecone
+
+from pinecone import Pinecone
+
+#Guardamos el secreto
+#Nota. Guardar el secreto en streamlit
+
+pinecone_api = st.secrets['pinecone_apikey']
+
+#hacemos la variable
+pc = Pinecone(
+      api_key=pinecone_api, environment="us-west1-gcp")
+    
+    
+#Iniciamos el index
+indexs2 = pc.Index('indexs2') #esto se puede verificar desde mi cuenta en pinecone.com
+
+#-*-*-*-*-*-*-*-*-*-*-**-*-*
+
+#Paso 7: Iniciamos el index como vectostore
+
+from langchain_pinecone import PineconeVectorStore
+from langchain_openai import OpenAIEmbeddings
+
+#Agarramos el secreto de la apikey
+openai_api = st.secrets['openai_api']
+
+
+#Creamos el embedding model
+embeddings = OpenAIEmbeddings(model="text-embedding-ada-002", openai_api_key= openai_api)
+
+#Hacemos el vectostore
+vector_store_chat = PineconeVectorStore(index = indexs2, embedding= embeddings, text_key= 'contenido')
+
+#-*-*-**-*-*-*-*-*-*-*
+
+#Paso 8: Hacemos el rag chain
+
+#Primero cargamos las librerias para hacer el chat, y los system prompts
+from langchain.chains import create_retrieval_chain
+from langchain_core.prompts import ChatPromptTemplate
+from langchain.chains.combine_documents import create_stuff_documents_chain
+
+#Segundo definimos el systemprompt
+#Nota//punto de mejora: Esto cambiará para cuando se de la opcion de elegir las normas con la que quieres chatear. Esto también seria un punto de mejora, pues la idea es que, en tanto más específico sea el systempropmt mejores respuestas dara. Ideas 1) El mismo systemprompt podría ser un rag chain. 2) expertos. 
+
+system_prompt1 = (f"Eres un consultor experto en leyes. Por lo cual, vas a contestar las preguntas que se te hagan, de una manera clara y precisa. Para responder, te basarás sólo en los documentos que tengan el siguiente nombre {normas_chat}")
+
+#Tercero, hacemos el promt template con el system prompt ya definido anteriormente 
+prompt = ChatPromptTemplate.from_messages(
+    [("system", system_prompt1), #lo que va entre " " es como el rol que ese espera que siga la instruccion que va del otro lado e la coma. en este sentido, le digo que el sistema debe adoptar ese systempropmt
+     ("human", "{context}"),]) #aqui el papel de humano adoptara lo que sea que le pregunte
+
+#fuente: https://api.python.langchain.com/en/latest/prompts/langchain_core.prompts.chat.ChatPromptTemplate.html
+
+
+#Cuarto, cargamos el llm y el retriever
+
+from langchain_openai import ChatOpenAI
+
+
+#cargamos el modelo
+llm = ChatOpenAI(
+    openai_api_key= openai_api , 
+    model_name='gpt-4o-mini', #recuerda que tambien esta disponible chat gto 4o
+    temperature=0.0
+)
+
+#Transformamos el vectorstore en retriever
+
+
+retriever = vector_store_chat.as_retriever()
+
+
+#Quinto, creamos el question answer chain y el rag chain
+
+question_answer_chain = create_stuff_documents_chain(llm, prompt) #aqui recupro el promp y el llm que usare
+
+rag_chain1 = create_retrieval_chain(retriever, question_answer_chain) #aqui recupero el rag con la variable retriever
+
+#-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+#Paso 9: Hacemos una función para obtener la respuesta
+
+
+def get_robot_response (user_message):
+    response = rag_chain1.invoke({"input": user_message})
+    return response ['answer']
+
+#*-*-*-*-*-*-**-*
+
+#Paso 10: Hacemos la función para enviar mensajes
+
+
 
 def send_message():
     user_message = st.session_state.user_input #toma el texto del usuario y lo guarda en una variable user_message
     if user_message:
-        st.session_state.messages.append({"user":user_message, "bot": "Soy Aymr. Si ya seleccionaste las normas sobre las que estas interesado, por favor haz una consulta"}) #recupera la respuesra del usuario, y da la respuesta del bot
+        bot_response = get_robot_response(user_message) #genera la respuesta
+        st.session_state.messages.append({"user":user_message, "bot": bot_response}) #recupera la respuesra del usuario, y da la respuesta del bot
         st.session_state.user_input = "" #vacia el campo para que el usuario ponga más cosas
+
+#*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+#Paso 11: Lo implementamos
+
 
 #Entrada de texto para el usuario
 
@@ -103,13 +213,10 @@ for message in st.session_state.messages: #itera sobre todos los mensajes guarda
         
 #-**-*-*-*-*-*-*-*-*-*-*-*
 
-#Paso X: Limpiar el chat (PENDIENTE. ME ARROJA ERROR)
 
-if st.button("Limpiar chat// reiniciar aplicación"):
-    st.session_state.messages = []
 
 #-**-**-*-*-*-**- 
-#Psso X+1 Referencias
+#Psso X: Referencias
 
 st.header ("Referencias")
 
