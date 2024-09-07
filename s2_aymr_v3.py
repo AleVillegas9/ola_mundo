@@ -74,17 +74,13 @@ st.write("""
 normas_chat = st.multiselect("Elije la o las normas con la que deseas chatear chatear: ",['2013-3-0-AC_V317', '2013-40-2-AC_V72', '2014-36-0-AC_V18', '2014-56-1-AC_V80', '2014-56-2-AC_V37', '2018-28-2-AC_V03', '2018-45-1-AC_V12', '2019-9-2-AC_V05', '2020-3-1-AC_V02', '2020-12-0-AC_V07', '2021-0-134-DD_V15', '2023-6-2-AC_V01'])
 
 #-*-*-*-*-*-*-*-*-*-*-*
-#Paso 5: Preparativos: Sesión
+#Paso 5: iniciamos una sesión
 
 
-#A) Creamos una sesion para almacenar los mensajes en una sesion
+#Creamos una sesion para almacenar los mensajes en una sesion
 if "messages" not in st.session_state: #session_state hace un diccionario
     st.session_state.messages = [] #crea una lista vacia para guadar tanto los mensajes mios como los del bot
     
-#B) Limpiar el chat anterior
-
-if st.button("Limpiar chat// reiniciar aplicación"):
-    st.session_state.messages = []
 
 #Posible mejora: Que se ejecute cuando se refresque la página. 
 #Posible mejora 2: Que el usuario ponga su nombre. Aunque aqui el problema sería eliminar todas las sesiones. 
@@ -213,6 +209,11 @@ for message in st.session_state.messages: #itera sobre todos los mensajes guarda
         
 #-**-*-*-*-*-*-*-*-*-*-*-*
 
+#Paso 12: cerrar sesión
+
+
+if st.button("Limpiar chat// reiniciar aplicación"):
+    st.session_state.messages = []
 
 
 #-**-**-*-*-*-**- 
